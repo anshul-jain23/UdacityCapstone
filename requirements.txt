@@ -2,3 +2,5 @@ Flask
 pytest
 pylint
 pytest-cov
+Werkzeug
+flask-restful

@@ -10,3 +10,9 @@ COPY . app.py /app/
 # hadolint ignore=DL3013
 RUN pip install --upgrade pip &&\
     pip install --trusted-host pypi.python.org -r requirements.txt
+
+# Expose port
+EXPOSE 80
+
+# Run app at container launch
+CMD ["python", "app.py"]

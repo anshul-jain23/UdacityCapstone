@@ -12,4 +12,4 @@ def home():
     return "<p>Hello .. Welcome to the Udacity's Capstone Project</p>" 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=True) # specify port=80
+    app.run(host='0.0.0.0', port=80, debug=True) # specify port=80
