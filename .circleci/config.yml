@@ -53,6 +53,8 @@ jobs:
             docker tag "$image" "${dockerpath}:${CIRCLE_WORKFLOW_ID:0:7}"
             docker tag "$image" "${dockerpath}:latest"
             docker push "${dockerpath}:${CIRCLE_WORKFLOW_ID:0:7}"
+            
+            docker push "${dockerpath}:latest"
 workflows:
   default:
     jobs:
