@@ -22,7 +22,7 @@ test:
 	#python -m pytest --nbval notebook.ipynb
 	
 lint:
-	hadolint Dockerfile
+	./hadolint Dockerfile
 	pylint --disable=R,C,W1203 **.py
 	
 start-api:
