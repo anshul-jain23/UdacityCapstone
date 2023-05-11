@@ -33,8 +33,30 @@ jobs:
           paths:
             - ./capstoneenv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-
+  
+  upload-docker:
+    docker:
+      - image: cimg/go:1.17
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+      - run:
+          name: Build and upload docker image to docker hub container
+          command: |
+            . capstoneenv/bin/activate
+            image="capstone"
+            docker build --tag=$image .
+            docker image ls
+            
+            dockerpath="$DOCKER_USERNAME/$image"
+            docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
+            docker tag "$image" "${dockerpath}:${CIRCLE_WORKFLOW_ID:0:7}"
+            docker tag "$image" "${dockerpath}:latest"
+            docker push "${dockerpath}:${CIRCLE_WORKFLOW_ID:0:7}"
 workflows:
   default:
     jobs:
       - run-lint
+      - upload-docker:
+          requires: [run-lint]
