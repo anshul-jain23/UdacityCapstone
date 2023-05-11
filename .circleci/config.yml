@@ -44,7 +44,6 @@ jobs:
       - run:
           name: Build and upload docker image to docker hub container
           command: |
-            . capstoneenv/bin/activate
             image="capstone"
             docker build --tag=$image .
             docker image ls
