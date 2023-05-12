@@ -118,7 +118,29 @@ jobs:
               kubectl get deployments
               kubectl get rs
             fi
-      - destroy-environment
+      
+  smoke-test:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - run:
+          name: Install dependancies
+          command: |
+            curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
+            install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+      - run:
+          name: Test load balancer
+          command: |
+            aws eks update-kubeconfig --name capstone --region us-east-1
+            export DNS=$(aws elb describe-load-balancers --query LoadBalancerDescriptions[*].DNSName --output text)
+            export URL="http://${DNS}"
+            echo "URL = ${URL}"
+            if curl -s "${URL}" | grep "Udacity"
+            then
+              echo "Capstone Deployment Successful"
+            else
+              kubectl rollout undo deployments/capstone
+            fi
 
 workflows:
   default:
@@ -128,3 +150,5 @@ workflows:
           requires: [run-lint]
       - deploy:
           requires: [upload-docker]
+      - smoke-test:
+          requires: [deploy]
