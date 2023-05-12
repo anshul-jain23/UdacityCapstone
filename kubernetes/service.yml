@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: capstoneSvc
+  name: capstone-svc
 spec:
   type: LoadBalancer
   selector:
