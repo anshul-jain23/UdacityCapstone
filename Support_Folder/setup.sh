@@ -1,5 +1,5 @@
 echo "creating ssh key"
-ssh-keygen -t rsa
+#ssh-keygen -t rsa
 
 echo "installing Hadolint"
 sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64

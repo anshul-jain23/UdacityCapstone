@@ -1,5 +1,15 @@
 version: 2.1
 
+commands:
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks.
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            eksctl delete cluster -f kubStack.yml
+            
 jobs:
   run-lint:
     docker:
@@ -55,9 +65,53 @@ jobs:
             docker push "${dockerpath}:${CIRCLE_WORKFLOW_ID:0:7}"
             
             docker push "${dockerpath}:latest"
+            
+  deploy:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependancies
+          command: |
+            sudo yum install -y tar gzip
+            curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
+            sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+            sudo mv /tmp/eksctl /usr/local/bin
+      - run:
+          name: create new cluster
+          command: |            
+            kubeRegion="us-east-1"
+            image="capstone"
+            dockerpath="$DOCKER_USERNAME/$image"
+            
+            if eksctl create cluster --config-file=kubStack.yml
+            then
+              echo "creating new Stack"
+              aws eks update-kubeconfig --name $image --region $kubeRegion              
+              kubectl apply -f kubernetes/deploy.yml
+              kubectl apply -f kubernetes/service.yml
+
+              kubectl get deployments
+              kubectl get services
+            else
+              aws eks update-kubeconfig --name $image --region $kubeRegion
+              echo "update existing Stack"
+              kubectl get deployments
+              kubectl get services
+              kubectl get deploy,rs,svc,pods
+              kubectl set image deployment/$image capstone-app="$dockerpath:${CIRCLE_WORKFLOW_ID:0:7}"
+              kubectl get deployments
+              kubectl get rs
+            fi
+      - destroy-environment
+
 workflows:
   default:
     jobs:
       - run-lint
       - upload-docker:
           requires: [run-lint]
+      - deploy:
+          requires: [upload-docker]
