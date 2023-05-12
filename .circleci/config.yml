@@ -84,7 +84,6 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - install_awscli
       - run:
           name: Install dependancies
           command: |
