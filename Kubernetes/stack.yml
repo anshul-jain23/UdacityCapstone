@@ -1,0 +1,16 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: capstone
+  region: us-east-1
+
+nodeGroups:
+  - name: ng1
+    instanceType: m5.large
+    amiFamily: AmazonLinux2
+    desiredCapacity: 2
+    volumeSize: 80
+    ssh:
+      allow: true
+      publicKeyName: Udacity_Pair

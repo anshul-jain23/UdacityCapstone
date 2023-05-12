@@ -86,7 +86,7 @@ jobs:
             image="capstone"
             dockerpath="$DOCKER_USERNAME/$image"
             
-            if eksctl create cluster --config-file=kubStack.yml
+            if eksctl create cluster --config-file=kubernetes/stack.yml
             then
               echo "creating new Stack"
               aws eks update-kubeconfig --name $image --region $kubeRegion              
