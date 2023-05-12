@@ -21,7 +21,7 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            eksctl delete cluster -f kubStack.yml
+            eksctl delete cluster -f kubernetes/stack.yml
             
 jobs:
   run-lint:
