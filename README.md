@@ -14,5 +14,27 @@ Capstone project for Cloud DevOps Engineer Nanodegree at Udacity.
 The application is a simple Hello Udacity Flask project based on python that display a html page with the text "Hello .. Welcome to the Udacity's Capstone Project". 
 
 ## Screenshots
-### Stacks
-![1](./Screenshots/Circle CI Pipeline.PNG)
+
+![1](./Screenshots/Circle%20CI%20Pipeline.PNG)
+![2](./Screenshots/Cluster%20Nodes.PNG)
+![3](./Screenshots/docker%20hub%20repository.PNG)
+![4](./Screenshots/Docker%20Upload%20Step%20Logs.PNG)
+![5](./Screenshots/Docker%20upload%20step.PNG)
+![6](./Screenshots/Failed%20Lint%20step.PNG)
+![7](./Screenshots/Kubernetes%20Create%20Cluster%20Step%20Logs.PNG)
+![8](./Screenshots/Kubernetes%20Create%20Cluster%20Step.PNG)
+![9](./Screenshots/Kubernetes%20Pods%20&%20Services.PNG)
+![10](./Screenshots/LB%20Configs.PNG)
+![11](./Screenshots/LB%20instances%20list.PNG)
+![12](./Screenshots/Smoke%20Testing%20Steps%20Logs.PNG)
+![13](./Screenshots/Smoke%20Testing%20Steps.PNG)
+![14](./Screenshots/Sucess%20Lint%20Step.PNG)
+![15](./Screenshots/Website%20output.PNG)
+
+
+
+
+
+
+
+
