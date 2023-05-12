@@ -6,6 +6,7 @@ WORKDIR /app
 # Copy source code to working directory
 COPY . app.py /app/
 
+test
 # Install packages from requirements.txt
 # hadolint ignore=DL3013
 RUN pip install --upgrade pip &&\
